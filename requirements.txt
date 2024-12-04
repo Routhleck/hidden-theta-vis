@@ -1,0 +1,5 @@
+networkx
+bokeh
+holoviews
+bokeh_sampledata
+pyparsing
