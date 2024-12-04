@@ -53,8 +53,8 @@ def create_graph(hiddens: list[Hidden], thetas: list[Theta]) -> nx.DiGraph:
     return G
 
 # Visualize the graph
-def visualize_graph(G: nx.DiGraph, file_name: str='graph_with_labels.html'):
-    custom_layout = partial(nx.layout.spring_layout, k=0.5, iterations=100, seed=42)
+def visualize_graph(G: nx.DiGraph, file_name: str='graph_spring_layout.html'):
+    custom_layout = partial(nx.layout.spring_layout, k=1, iterations=250, seed=42, threshold=1e-4)  # Custom layout for the graph
     graph = hv.Graph.from_networkx(G, custom_layout).opts(
         opts.Graph(directed=True, node_size='size', bgcolor='#1e1e1e', xaxis=None, yaxis=None,
                    edge_line_color='color', edge_line_width=1, width=800, height=800, arrowhead_length=0.01,
@@ -67,7 +67,7 @@ def visualize_graph(G: nx.DiGraph, file_name: str='graph_with_labels.html'):
 if __name__ == '__main__':
     # Example usage
     num_hiddens = 25
-    num_hidden_groups = 3
+    num_hidden_groups = 6
     num_thetas = 50
 
     hiddens, hidden_groups, thetas = generate_data(num_hiddens, num_hidden_groups, num_thetas)

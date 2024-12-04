@@ -3,3 +3,4 @@ bokeh
 holoviews
 bokeh_sampledata
 pyparsing
+scipy
