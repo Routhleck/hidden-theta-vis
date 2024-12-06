@@ -1,6 +1,10 @@
 # Hidden Theta Visualization
 
-This repository contains the code and resources for visualizing hidden theta data using Jupyter Notebooks.
+This repository contains the code and resources for visualizing hidden theta data.
+
+example(create by [main.py](https://github.com/Routhleck/hidden-theta-vis/blob/main/main.py)):
+
+https://routhleck.com/hidden-theta-vis/
 
 ## Table of Contents
 - [Installation](#installation)
