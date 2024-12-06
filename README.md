@@ -6,6 +6,8 @@ example(create by [main.py](https://github.com/Routhleck/hidden-theta-vis/blob/m
 
 https://routhleck.com/hidden-theta-vis/
 
+![bokeh_plot](README.assets/bokeh_plot.png)
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
