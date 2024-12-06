@@ -186,7 +186,7 @@ def hidden_theta_layout(G: nx.Graph,
     for group, center_point in zip(hidden_groups, region_centers):
         for hidden in group.hiddens:
             if hidden.target is None and f"Hidden_{hidden.id}" not in pos:
-                angle = np.random.rand() * np.pi / 2
+                angle = np.arctan2(center_point[1], center_point[0]) + np.random.rand() * np.pi / 2
                 pos[f"Hidden_{hidden.id}"] = center_point + np.array([H2H * np.cos(angle), H2H * np.sin(angle)])
     logging.info("Randomly positioned Hidden nodes without targets.")
 
@@ -198,7 +198,7 @@ def hidden_theta_layout(G: nx.Graph,
                 if hidden.target is not None:
                     target_id = f"Hidden_{hidden.target.id}"
                     if target_id in pos:
-                        angle = np.random.rand() * np.pi / 2
+                        angle = np.arctan2(pos[target_id][1], pos[target_id][0]) + np.random.rand() * np.pi / 2
                         pos[f"Hidden_{hidden.id}"] = pos[target_id] + np.array([H2H * np.cos(angle), H2H * np.sin(angle)])
                         group_hiddens.remove(hidden)
     logging.info("Positioned Hidden nodes with targets.")
@@ -211,7 +211,7 @@ def hidden_theta_layout(G: nx.Graph,
     for theta in thetas_hidden:
         target_id = f"Hidden_{theta.target.id}"
         if target_id in pos:
-            angle = np.random.rand() * np.pi / 2
+            angle = np.arctan2(pos[target_id][1], pos[target_id][0]) + np.random.rand() * np.pi / 2
             pos[f"Theta_{theta.id}"] = pos[target_id] + np.array([T2H * np.cos(angle), T2H * np.sin(angle)])
     logging.info("Positioned Theta nodes with Hidden targets.")
 
@@ -223,7 +223,7 @@ def hidden_theta_layout(G: nx.Graph,
         for theta in thetas_theta:
             target_id = f"Theta_{theta.target.id}"
             if target_id in pos:
-                angle = np.random.rand() * np.pi / 2
+                angle = np.arctan2(pos[target_id][1], pos[target_id][0]) + np.random.rand() * np.pi / 2
                 pos[f"Theta_{theta.id}"] = pos[target_id] + np.array([T2T * np.cos(angle), T2T * np.sin(angle)])
                 thetas_theta.remove(theta)
     logging.info("Positioned Theta nodes with Theta targets.")
