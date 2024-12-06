@@ -1,6 +1,6 @@
 # Hidden Theta Visualization
 
-This repository contains the code and resources for visualizing hidden theta data.
+This repository contains the code and resources for visualizing hidden theta data in neural networks. It provides tools to visualize dependencies and variable information within neural networks, making it easier to understand and analyze their behavior.
 
 example(create by [main.py](https://github.com/Routhleck/hidden-theta-vis/blob/main/main.py)):
 
