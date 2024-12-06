@@ -1,11 +1,11 @@
 from functools import partial
 
-import networkx as nx
 import holoviews as hv
+import networkx as nx
 from holoviews import opts
-from bokeh.io import show
 
-from data import Hidden, Theta, generate_data
+from data import Hidden, Theta, generate_data, HiddenGroup
+from layout import hidden_theta_layout
 
 hv.extension('bokeh')
 
@@ -19,7 +19,6 @@ THETA_HIDDEN_EDGE_COLOR = '#ff7f00'  # orange
 THETA_THETA_EDGE_COLOR = '#984ea3'  # purple
 HIDDEN_EDGE_WEIGHT = 2.5
 THETA_EDGE_WEIGHT = 2
-
 
 
 # Create a directed graph from the generated data
@@ -52,9 +51,25 @@ def create_graph(hiddens: list[Hidden], thetas: list[Theta]) -> nx.DiGraph:
 
     return G
 
+
 # Visualize the graph
-def visualize_graph(G: nx.DiGraph, file_name: str='graph_spring_layout.html'):
-    custom_layout = partial(nx.layout.spring_layout, k=1, iterations=250, seed=42, threshold=1e-4)  # Custom layout for the graph
+def visualize_graph(G: nx.DiGraph,
+                    file_name: str = 'graph_custom_layout.html',
+                    hidden_groups: list[HiddenGroup] = None,
+                    thetas: list[Theta] = None):
+    # custom_layout = partial(nx.layout.spring_layout, k=1, iterations=400, seed=42, threshold=1e-4)  # Custom layout for the graph
+    custom_layout = partial(hidden_theta_layout,
+                            hidden_groups=hidden_groups,
+                            thetas=thetas,
+                            H2H=0.3,
+                            T2H=0.1,
+                            T2T=0.1,
+                            n_iterations=50,
+                            dim=2,
+                            center=None,
+                            width=100.,
+                            height=100.,
+                            )
     graph = hv.Graph.from_networkx(G, custom_layout).opts(
         opts.Graph(directed=True, node_size='size', bgcolor='#1e1e1e', xaxis=None, yaxis=None,
                    edge_line_color='color', edge_line_width=1, width=800, height=800, arrowhead_length=0.01,
@@ -62,16 +77,16 @@ def visualize_graph(G: nx.DiGraph, file_name: str='graph_spring_layout.html'):
     )
 
     hv.save(graph, file_name, fmt='html')
-    hv.render(graph)
+
 
 if __name__ == '__main__':
     # Example usage
-    num_hiddens = 25
-    num_hidden_groups = 6
-    num_thetas = 50
+    num_hiddens = 50
+    num_hidden_groups = 15
+    num_thetas = 120
 
-    hiddens, hidden_groups, thetas = generate_data(num_hiddens, num_hidden_groups, num_thetas)
+    hiddens, hidden_groups, thetas = generate_data(num_hiddens, num_hidden_groups, num_thetas, seed=6)
 
     # Create and visualize the graph
     G = create_graph(hiddens, thetas)
-    file_name = visualize_graph(G)
+    file_name = visualize_graph(G, hidden_groups=hidden_groups, thetas=thetas)
